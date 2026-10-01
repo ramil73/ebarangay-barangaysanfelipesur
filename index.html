@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eBarangay | Barangay San Felipe Sur</title>
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+<header class="site">
+  <div class="brand">
+    <div class="seal">SFS</div>
+    <div>
+      <h1>eBarangay | Barangay San Felipe Sur</h1>
+      <div class="kicker">Province of Pangasinan • Municipality of Binalonan</div>
+      <div class="sub">Resident Services, Document Requests, Digital Tracking & Barangay Administration</div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="request">Request a Document</button>
+  <button class="tab-btn" data-tab="track">Track My Request</button>
+  <button class="tab-btn" data-tab="verify">Verify Certificate</button>
+  <button class="tab-btn" data-tab="admin">Barangay Staff Login</button>
+</nav>
+
+<main>
+<section id="tab-request" class="panel active">
+  <div class="grid grid-2">
+    <div class="card">
+      <h2>Online Document Request</h2>
+      <p class="lead">Submit a request online and receive a reference number for tracking.</p>
+      <form id="requestForm">
+        <div class="row">
+          <div><label>Full Name</label><input id="f_name" required placeholder="Juan D. Dela Cruz"></div>
+          <div><label>Mobile Number</label><input id="f_mobile" required placeholder="09XXXXXXXXX" inputmode="numeric" maxlength="11" pattern="09[0-9]{9}" title="Enter an 11-digit mobile number starting with 09"></div>
+        </div>
+        <label>Address / Purok</label><input id="f_address" required placeholder="Purok 3, San Felipe Sur">
+        <div class="row">
+          <div>
+            <label>Document Needed</label>
+            <select id="f_doctype" required>
+              <option value="">Select document type</option>
+              <option>Barangay Clearance</option>
+              <option>Certificate of Indigency</option>
+              <option>Certificate of Residency</option>
+              <option>First Time Job Seeker Certificate</option>
+              <option>Business Permit Endorsement</option>
+            </select>
+          </div>
+          <div><label>Number of Copies</label><input type="number" id="f_copies" min="1" max="5" value="1" required></div>
+        </div>
+        <label>Purpose</label><select id="f_purpose" required>
+          <option value="">Select purpose</option><option>Employment</option><option>Scholarship</option><option>ID Application</option><option>Business Registration</option><option>School Requirement</option><option>Other</option>
+        </select>
+        <label>Additional Details</label><textarea id="f_details" placeholder="Optional notes for the barangay staff"></textarea>
+        <label>Valid ID / Supporting Documents</label>
+        <div class="upload">
+          <input type="file" id="f_files" accept=".jpg,.jpeg,.png,.pdf" multiple>
+          <div class="filelist" id="fileList">Accepted: JPG, PNG, PDF. Prototype stores file names only.</div>
+        </div>
+        <label>Preferred Pickup Schedule</label>
+        <div class="row">
+          <div><input type="date" id="f_date" required></div>
+          <div><select id="f_time" required><option value="">Select time</option><option>8:00 AM</option><option>9:00 AM</option><option>10:00 AM</option><option>1:00 PM</option><option>2:00 PM</option><option>3:00 PM</option><option>4:00 PM</option></select></div>
+        </div>
+        <button class="btn" type="submit">Submit Request</button>
+      </form>
+      <div id="refResult"></div>
+    </div>
+    <div>
+      <div class="card">
+        <h3>How it works</h3>
+        <div class="notice">1. Fill out the form → 2. Upload requirements → 3. Choose pickup schedule → 4. Track using your reference number → 5. Receive SMS when the request is ready.</div>
+        <div style="height:14px"></div>
+        <div class="grid grid-2">
+          <div class="stats"><div class="num">5</div><div class="label">Document types</div></div>
+          <div class="stats"><div class="num">24/7</div><div class="label">Online submission</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Status Guide</h3>
+        <p><span class="badge pending">Pending</span> Request received and waiting for review.</p>
+        <p><span class="badge review">Under Review</span> Staff is checking details and requirements.</p>
+        <p><span class="badge ready">Ready / Issued</span> Certificate can be claimed or has been issued.</p>
+        <p><span class="badge hold">On Hold</span> Additional information or requirements are needed.</p>
+        <p><span class="badge rejected">Rejected</span> Request was not approved; see reason notes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tab-track" class="panel">
+  <div class="card">
+    <h2>Real-Time Request Tracker</h2>
+    <p class="lead">Enter your reference code to view the latest request status.</p>
+    <label>Reference Number</label><input id="trackRef" placeholder="e.g. SFS-2026-0001">
+    <div class="actions"><button class="btn" id="trackBtn">Check Status</button></div>
+    <div id="trackResult" style="margin-top:18px"></div>
+  </div>
+</section>
+
+<section id="tab-verify" class="panel">
+  <div class="card">
+    <h2>Certificate Verification</h2>
+    <p class="lead">Scan the QR code printed on a certificate, or enter the reference number to verify the record stored by this prototype.</p>
+    <label>Reference Number</label><input id="verifyRef" placeholder="SFS-2026-0001">
+    <div class="actions"><button class="btn blue" id="verifyBtn">Verify Record</button></div>
+    <div id="verifyResult" style="margin-top:18px"></div>
+  </div>
+</section>
+
+<section id="tab-admin" class="panel">
+  <div class="card login-box" id="adminLoginCard">
+    <h2>Barangay Staff Login</h2>
+    <p class="lead">Authorized personnel only.</p>
+    <label>Username</label><input id="adm_user" placeholder="admin">
+    <label>Password</label><input id="adm_pass" type="password" placeholder="••••••••">
+    <div class="actions"><button class="btn" id="adminLoginBtn">Log In</button></div>
+    <div style="font-size:12px;color:var(--muted);margin-top:10px">Demo: <b>admin</b> / <b>brgy2026</b></div>
+    <div id="loginError" style="color:var(--red);font-size:13px;margin-top:8px"></div>
+  </div>
+
+  <div id="adminDashboard" style="display:none">
+    <div class="dashboard-title">
+      <div><h2>Barangay Administration</h2><div class="lead">Central processing, resident records, SMS, revenue and audit monitoring.</div></div>
+      <div class="actions no-print" style="margin:0"><button class="btn small blue" onclick="exportCSV()">Export Requests (CSV)</button><button class="btn small blue" onclick="backupJSON()">Backup Data (JSON)</button><button class="btn secondary" id="logoutBtn">Log Out</button></div>
+    </div>
+    <div class="admin-nav">
+      <button class="admin-tab active" data-section="overview">Overview</button>
+      <button class="admin-tab" data-section="requests">Requests</button>
+      <button class="admin-tab" data-section="residents">Residents & Census</button>
+      <button class="admin-tab" data-section="appointments">Appointments</button>
+      <button class="admin-tab" data-section="reports">Reports & Analytics</button>
+      <button class="admin-tab" data-section="sms">SMS Broadcast</button>
+      <button class="admin-tab" data-section="audit">Audit Trail</button>
+    </div>
+
+    <div id="admin-overview" class="admin-section active"></div>
+    <div id="admin-requests" class="admin-section"></div>
+    <div id="admin-residents" class="admin-section"></div>
+    <div id="admin-appointments" class="admin-section"></div>
+    <div id="admin-reports" class="admin-section"></div>
+    <div id="admin-sms" class="admin-section"></div>
+    <div id="admin-audit" class="admin-section"></div>
+  </div>
+</section>
+
+<section id="tab-cert" class="panel">
+  <div class="no-print actions" style="margin-bottom:16px">
+    <button class="btn secondary" id="backFromCert">← Back to Dashboard</button>
+    <button class="btn" id="printCertBtn">Print / Save as PDF</button>
+  </div>
+  <div class="cert-wrap"><div class="cert" id="certContent"></div></div>
+</section>
+</main>
+
+<div class="modal" id="requestModal">
+  <div class="modal-card">
+    <h3>Process Request</h3>
+    <div id="modalBody"></div>
+    <div class="actions">
+      <button class="btn" id="saveProcess">Save Status</button>
+      <button class="btn secondary" id="closeModal">Cancel</button>
+    </div>
+  </div>
+</div>
+<footer>eBarangay Prototype — Barangay San Felipe Sur, Binalonan, Pangasinan. Academic MVP demonstration.</footer>
+
+<script src="script.js?v=3"></script>
+</body>
+</html>
